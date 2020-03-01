@@ -57,22 +57,42 @@ function getBlogposts (url) {
 }
 
 function addBlogpostsToPage (data) {
-    for (var blogpost in data) {
-        if (data.hasOwnProperty(blogpost)) {
+    // for (var blogpost in data) {
+    //     if (data.hasOwnProperty(blogpost)) {
+    //
+    //         var postDiv         = document.createElement('div');
+    //         var postText        = document.createElement('p');
+    //         var thumbnail       = document.createElement('img');
+    //         var postContainer   = document.querySelector('.post-container');
+    //
+    //         thumbnail.src = "./img/logo2.png";
+    //         thumbnail.className = "thumbnail";
+    //         postText.innerHTML = data[blogpost];
+    //         postDiv.className = "post";
+    //
+    //         postDiv.appendChild(thumbnail);
+    //         postDiv.appendChild(postText);
+    //         postContainer.appendChild(postDiv);
+    //     }
+    // }
 
-            var postDiv         = document.createElement('div');
-            var postText        = document.createElement('p');
-            var thumbnail       = document.createElement('img');
-            var postContainer   = document.querySelector('.post-container');
+    data.forEach(function(arrayItem) {
+      for (var blogpost in arrayItem) {
+          if (arrayItem.hasOwnProperty(blogpost)) {
 
-            thumbnail.src = "./img/logo2.png";
-            thumbnail.className = "thumbnail";
-            postText.innerHTML = data[blogpost];
-            postDiv.className = "post";
+              var postDiv         = document.createElement('div');
+              var postText        = document.createElement('p');
+              var thumbnail       = document.createElement('img');
+              var postContainer   = document.querySelector('.post-container');
 
-            postDiv.appendChild(thumbnail);
-            postDiv.appendChild(postText);
-            postContainer.appendChild(postDiv);
-        }
-    }
+              thumbnail.src = "./img/logo2.png";
+              thumbnail.className = "thumbnail";
+              postText.innerHTML = arrayItem[blogpost];
+              postDiv.className = "post";
+
+              postDiv.appendChild(thumbnail);
+              postDiv.appendChild(postText);
+              postContainer.appendChild(postDiv);
+          }
+      }})
 }
