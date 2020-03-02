@@ -28,10 +28,11 @@ con.connect(function(err) {
 
 app.post('/create-post', function (req, res) {
   var newValue = req.fields.blogpost;
+  var newPost = [{"blogpost" : newValue}];
   con.query('INSERT INTO blogposts (blogpost) VALUES ("'+ newValue +'")', function(err, data) {
     if(err) {console.log("det blev fel")}
     else {
-      res.send(data);
+      res.send(newPost);
     }
   })
   // fs.readFile(__dirname + '/data/posts.json', function (error, file) {
@@ -50,11 +51,9 @@ app.post('/create-post', function (req, res) {
 
 app.get('/get-posts', function (req, res) {
   //res.sendFile(__dirname + '/data/posts.json');
-  //var results;
   con.query('SELECT blogpost FROM blogposts', function(err, data) {
     if(err) {console.log("det blev fel")}
     else {
-      //var results = data;
       res.send(data);
 
     }
