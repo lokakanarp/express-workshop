@@ -14,7 +14,6 @@ function ready () {
         event.preventDefault(); // prevents the form from contacting our server automatically (we want to do it ourselves)
         var formActionUrl = form.action; // 'form.action' is the url '/create-post'
         var formData = new FormData(form);
-
         postBlogposts(formActionUrl, formData);
     });
 }
@@ -57,24 +56,6 @@ function getBlogposts (url) {
 }
 
 function addBlogpostsToPage (data) {
-    // for (var blogpost in data) {
-    //     if (data.hasOwnProperty(blogpost)) {
-    //
-    //         var postDiv         = document.createElement('div');
-    //         var postText        = document.createElement('p');
-    //         var thumbnail       = document.createElement('img');
-    //         var postContainer   = document.querySelector('.post-container');
-    //
-    //         thumbnail.src = "./img/logo2.png";
-    //         thumbnail.className = "thumbnail";
-    //         postText.innerHTML = data[blogpost];
-    //         postDiv.className = "post";
-    //
-    //         postDiv.appendChild(thumbnail);
-    //         postDiv.appendChild(postText);
-    //         postContainer.appendChild(postDiv);
-    //     }
-    // }
 
     data.forEach(function(arrayItem) {
       for (var blogpost in arrayItem) {
