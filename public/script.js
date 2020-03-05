@@ -46,7 +46,7 @@ function getBlogposts (url) {
     .then(function (res) {
         res.json()
         .then(function (json) {
-            console.log(json);
+            //console.log(json);
             addBlogpostsToPage(json);
         });
     })
@@ -58,22 +58,27 @@ function getBlogposts (url) {
 function addBlogpostsToPage (data) {
 
     data.forEach(function(arrayItem) {
-      for (var blogpost in arrayItem) {
-          if (arrayItem.hasOwnProperty(blogpost)) {
+      console.log(arrayItem)
+      //for (var blogpost in arrayItem) {
+          //if (arrayItem.hasOwnProperty(blogpost)) {
 
               var postDiv         = document.createElement('div');
+              var postTitle       = document.createElement('h2');
               var postText        = document.createElement('p');
               var thumbnail       = document.createElement('img');
               var postContainer   = document.querySelector('.post-container');
 
               thumbnail.src = "./img/logo2.png";
               thumbnail.className = "thumbnail";
-              postText.innerHTML = arrayItem[blogpost];
+              postText.innerHTML = arrayItem.blogpost;
+              postTitle.innerHTML = arrayItem.title;
               postDiv.className = "post";
 
               postDiv.appendChild(thumbnail);
+              postDiv.appendChild(postTitle);
               postDiv.appendChild(postText);
               postContainer.appendChild(postDiv);
-          }
-      }})
+          //}
+      })
+    //})
 }
