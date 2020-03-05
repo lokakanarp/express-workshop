@@ -28,8 +28,9 @@ con.connect(function(err) {
 
 app.post('/create-post', function (req, res) {
   var newValue = req.fields.blogpost;
-  var newPost = [{"blogpost" : newValue}];
-  con.query('INSERT INTO blogposts (blogpost) VALUES ("'+ newValue +'")', function(err, data) {
+  var newTitle = req.fields.title;
+  var newPost = [{"blogpost" : newValue, "title" : newTitle}];
+  con.query('INSERT INTO blogposts (blogpost, title) VALUES ("'+ newValue +'", "'+ newTitle +'")', function(err, data) {
     if(err) {console.log("det blev fel")}
     else {
       res.send(newPost);
@@ -51,7 +52,7 @@ app.post('/create-post', function (req, res) {
 
 app.get('/get-posts', function (req, res) {
   //res.sendFile(__dirname + '/data/posts.json');
-  con.query('SELECT blogpost FROM blogposts', function(err, data) {
+  con.query('SELECT * FROM blogposts', function(err, data) {
     if(err) {console.log("det blev fel")}
     else {
       res.send(data);
