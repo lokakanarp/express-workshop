@@ -55,29 +55,52 @@ function getBlogposts (url) {
     });
 }
 
+function deleteBlogpost(url, data) {
+  fetch(url, {
+      method: 'DELETE',
+      body: data
+  })
+  .then(function (res) {
+      console.log("post has been deleted");
+  })
+  .catch(function (err) {
+      console.error(err)
+  });
+}
+
 function addBlogpostsToPage (data) {
 
     data.forEach(function(arrayItem) {
-      console.log(arrayItem)
       //for (var blogpost in arrayItem) {
           //if (arrayItem.hasOwnProperty(blogpost)) {
 
               var postDiv         = document.createElement('div');
               var postTitle       = document.createElement('h2');
               var postText        = document.createElement('p');
-              var thumbnail       = document.createElement('img');
               var postContainer   = document.querySelector('.post-container');
+              var deleteButton    = document.createElement('button');
+              var updateButton    = document.createElement('button');
 
-              thumbnail.src = "./img/logo2.png";
-              thumbnail.className = "thumbnail";
               postText.innerHTML = arrayItem.blogpost;
               postTitle.innerHTML = arrayItem.title;
+              updateButton.textContent = "update";
+              deleteButton.textContent = "delete";
               postDiv.className = "post";
 
-              postDiv.appendChild(thumbnail);
+              deleteButton.addEventListener('click', function (event) {
+                  event.preventDefault();
+                  var formData = new FormData();
+                  formData.append('id', arrayItem.id);
+                  deleteBlogpost('/delete-post', formData);
+              });
+
               postDiv.appendChild(postTitle);
               postDiv.appendChild(postText);
+              postDiv.appendChild(deleteButton);
+              postDiv.appendChild(updateButton);
               postContainer.appendChild(postDiv);
+
+
           //}
       })
     //})
