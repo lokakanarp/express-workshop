@@ -9,7 +9,7 @@ var mysql = require('mysql'); //ny
 app.use(express.static("public"));
 app.use(formidable());
 
-//Testar lite
+//Connection to database
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -25,13 +25,13 @@ con.connect(function(err) {
 });
 
 
-
+//Handlers
 app.post('/create-post', function (req, res) {
   var newValue = req.fields.blogpost;
   var newTitle = req.fields.title;
   var newPost = [{"blogpost" : newValue, "title" : newTitle}];
   con.query('INSERT INTO blogposts (blogpost, title) VALUES ("'+ newValue +'", "'+ newTitle +'")', function(err, data) {
-    if(err) {console.log("det blev fel")}
+    if(err) {console.log("Could not post")}
     else {
       res.send(newPost);
     }
@@ -53,7 +53,7 @@ app.post('/create-post', function (req, res) {
 app.get('/get-posts', function (req, res) {
   //res.sendFile(__dirname + '/data/posts.json');
   con.query('SELECT * FROM blogposts', function(err, data) {
-    if(err) {console.log("det blev fel")}
+    if(err) {console.log("Could not get")}
     else {
       res.send(data);
     }
@@ -62,11 +62,11 @@ app.get('/get-posts', function (req, res) {
 
 app.delete('/delete-post', function (req, res) {
   var blogPostId = req.fields.id;
-  console.log('hej');
+  var deletedPost = req.fields;
   con.query('DELETE FROM blogposts WHERE id =' + blogPostId, function(err, data) {
-    if(err) {console.log("det blev fel")}
+    if(err) {console.log("Could not delete")}
     else {
-      res.redirect('/');
+      res.send(deletedPost);
     }
   })
 })
