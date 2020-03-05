@@ -46,7 +46,6 @@ function getBlogposts (url) {
     .then(function (res) {
         res.json()
         .then(function (json) {
-            //console.log(json);
             addBlogpostsToPage(json);
         });
     })
@@ -61,7 +60,11 @@ function deleteBlogpost(url, data) {
       body: data
   })
   .then(function (res) {
-      console.log("post has been deleted");
+      res.json()
+          .then(function (json) {
+            console.log(json);
+            deleteBlogpostFromPage(json);
+     })
   })
   .catch(function (err) {
       console.error(err)
@@ -86,6 +89,7 @@ function addBlogpostsToPage (data) {
               updateButton.textContent = "update";
               deleteButton.textContent = "delete";
               postDiv.className = "post";
+              postDiv.id = arrayItem.id;
 
               deleteButton.addEventListener('click', function (event) {
                   event.preventDefault();
@@ -104,4 +108,9 @@ function addBlogpostsToPage (data) {
           //}
       })
     //})
+}
+
+function deleteBlogpostFromPage (data) {
+  var postDivToDelete = document.getElementById(data.id);
+  postDivToDelete.remove();
 }
