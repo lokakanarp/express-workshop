@@ -56,10 +56,20 @@ app.get('/get-posts', function (req, res) {
     if(err) {console.log("det blev fel")}
     else {
       res.send(data);
-
     }
   });
 });
+
+app.delete('/delete-post', function (req, res) {
+  var blogPostId = req.fields.id;
+  console.log('hej');
+  con.query('DELETE FROM blogposts WHERE id =' + blogPostId, function(err, data) {
+    if(err) {console.log("det blev fel")}
+    else {
+      res.redirect('/');
+    }
+  })
+})
 
 app.listen(3000, function () {
   console.log('Hej! Server is listening on port 3000. Ready to accept requests!');
