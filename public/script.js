@@ -27,9 +27,9 @@ function postBlogposts (url, data) {
         body: data
     })
     .then(function (res) {
+      console.log(res)
         res.json()
             .then(function (json) {
-                console.log(json);
                 addBlogpostsToPage(json);
                 document.querySelector('form').reset();
         })
@@ -63,7 +63,6 @@ function deleteBlogpost(url, data) {
       res.json()
           .then(function (json) {
             console.log(json);
-            deleteBlogpostFromPage(json);
      })
   })
   .catch(function (err) {
@@ -91,10 +90,13 @@ function addBlogpostsToPage (data) {
               postDiv.className = "post";
               postDiv.id = arrayItem.id;
 
+              var formData = new FormData();
+              formData.append('id', arrayItem.id);
+
+
               deleteButton.addEventListener('click', function (event) {
                   event.preventDefault();
-                  var formData = new FormData();
-                  formData.append('id', arrayItem.id);
+                  deleteButton.parentElement.remove();
                   deleteBlogpost('/delete-post', formData);
               });
 
@@ -108,9 +110,4 @@ function addBlogpostsToPage (data) {
           //}
       })
     //})
-}
-
-function deleteBlogpostFromPage (data) {
-  var postDivToDelete = document.getElementById(data.id);
-  postDivToDelete.remove();
 }

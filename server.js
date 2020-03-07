@@ -27,13 +27,14 @@ con.connect(function(err) {
 
 //Handlers
 app.post('/create-post', function (req, res) {
-  var newValue = req.fields.blogpost;
+  var newBlogpost = req.fields.blogpost;
   var newTitle = req.fields.title;
-  var newPost = [{"blogpost" : newValue, "title" : newTitle}];
-  con.query('INSERT INTO blogposts (blogpost, title) VALUES ("'+ newValue +'", "'+ newTitle +'")', function(err, data) {
+  con.query('INSERT INTO blogposts (blogpost, title) VALUES ("'+ newBlogpost +'", "'+ newTitle +'")', function(err, data) {
     if(err) {console.log("Could not post")}
     else {
-      res.send(newPost);
+      var newId = data.insertId;
+      var responseData = [{"blogpost" : newBlogpost, "title": newTitle, "id": newId}];
+      res.send(responseData);
     }
   })
   // fs.readFile(__dirname + '/data/posts.json', function (error, file) {
@@ -62,9 +63,10 @@ app.get('/get-posts', function (req, res) {
 
 app.delete('/delete-post', function (req, res) {
   var blogPostId = req.fields.id;
+  console.log(blogPostId);
   var deletedPost = req.fields;
   con.query('DELETE FROM blogposts WHERE id =' + blogPostId, function(err, data) {
-    if(err) {console.log("Could not delete")}
+    if(err) {console.log("no Could not delete")}
     else {
       res.send(deletedPost);
     }
