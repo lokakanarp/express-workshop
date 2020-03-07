@@ -3,9 +3,9 @@
 ********************/
 
 body, html, div, label, p, h1, h2, h3, h4, h5, h6, form, a, input, textarea {
-	margin: 0; 
-	padding: 0; 
-	border: 0; 
+	margin: 0;
+	padding: 0;
+	border: 0;
 	outline: none;
 }
 
@@ -13,8 +13,8 @@ body, html, div, label, p, h1, h2, h3, h4, h5, h6, form, a, input, textarea {
 body {
 	line-height: 1;
 	font-size: 88%;
-	font-family: 'Open Sans', arial, sans-serif;
-	background: #FAFAFA;
+	font-family: "helvetica",'Open Sans', arial, sans-serif;
+	background: #e3dfdb;
 	color: #585858;
 }
 
@@ -24,11 +24,12 @@ div {
 
 
 h1, h2, h3, h4, h5, h6 {
+	text-transform: uppercase;
 	font-size: 100%;
-    padding: 23px 0;
-	margin: 0 15px;
+  padding: 23px 0;
 	color: #FF0040;
-	letter-spacing: 1px;
+	letter-spacing: 0.083em;
+	line-height: 1.35em;
 }
 
 h1 {
@@ -36,7 +37,10 @@ h1 {
 }
 
 h2 {
-	font-size: 25px;
+	padding: 0;
+	margin: 15px 0;
+	font-size: 17px;
+	font-weight: 700;
 }
 
 main {
@@ -53,7 +57,7 @@ main {
 header {
 	background: #FF0040;
 	background: -webkit-linear-gradient(#F5A9BC, #FF0040);
-	background: -o-linear-gradient(#F5A9BC, #FF0040); 
+	background: -o-linear-gradient(#F5A9BC, #FF0040);
 	background: -moz-linear-gradient(#F5A9BC, #FF0040);
 	background: linear-gradient(#F5A9BC, #FF0040);
 }
@@ -88,16 +92,12 @@ label {
 textarea {
 	width: 96%;
 	border-radius: 3px;
-	border: 1px solid #848484;
 	padding: 5px 2%;
 }
 
-button[type="submit"] {
-	background: #A5DF00;
-	background: -webkit-linear-gradient(#93C503, #ABCC4B);
-	background: -o-linear-gradient(#93C503, #ABCC4B);
-	background: -moz-linear-gradient(#93C503, #ABCC4B);
-	background: linear-gradient(#93C503, #ABCC4B);
+button {
+	background: black;
+
 	border: none;
     color: white;
     padding: 4px 25px;
@@ -126,18 +126,18 @@ hr {
 
 .post {
 	width: 100%;
-    border: 1px solid #848484;
     float: left;
-    margin: 2%;
+    margin: 5px;
     border-radius: 3px;
-    -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
-    box-shadow: 3px 3px 3px 0px rgba(50, 50, 50, 0.4);
     background: white;
+		padding: 35px;
 }
 
 .post p {
-	margin: 5px 10px;
+	font-size: 15px;
+	font-weight: 300;
+	line-height: 1.36em;
+	letter-spacing: 0.05em;
 }
 
 @media (min-width: 600px) {
