@@ -77,15 +77,18 @@ function addBlogpostsToPage (data) {
           //if (arrayItem.hasOwnProperty(blogpost)) {
 
               var postDiv         = document.createElement('div');
+              var titleAndText    = document.createElement('div');
               var postTitle       = document.createElement('h2');
               var postText        = document.createElement('p');
               var postContainer   = document.querySelector('.post-container');
+              var buttonContainer = document.createElement('div');
               var deleteButton    = document.createElement('button');
               var updateButton    = document.createElement('button');
 
               postText.innerHTML = arrayItem.blogpost;
               postTitle.innerHTML = arrayItem.title;
-              updateButton.textContent = "update";
+              buttonContainer.className = "button-container";
+              updateButton.textContent = "edit";
               deleteButton.textContent = "delete";
               postDiv.className = "post";
               postDiv.id = arrayItem.id;
@@ -96,18 +99,49 @@ function addBlogpostsToPage (data) {
 
               deleteButton.addEventListener('click', function (event) {
                   event.preventDefault();
-                  deleteButton.parentElement.remove();
+                  postDiv.remove();
                   deleteBlogpost('/delete-post', formData);
               });
 
-              postDiv.appendChild(postTitle);
-              postDiv.appendChild(postText);
-              postDiv.appendChild(deleteButton);
-              postDiv.appendChild(updateButton);
-              postContainer.appendChild(postDiv);
+              updateButton.addEventListener('click', function (event) {
+                  event.preventDefault();
+                  updateButton.remove();
+                  createUpdateForm(postDiv.id, arrayItem.title, arrayItem.blogpost);
+              });
+
+              titleAndText.appendChild(postTitle);
+              titleAndText.appendChild(postText);
+              postDiv.appendChild(titleAndText);
+              postDiv.appendChild(buttonContainer);
+              buttonContainer.appendChild(deleteButton);
+              buttonContainer.appendChild(updateButton);
+              //postContainer.appendChild(postDiv);
+              postContainer.insertBefore(postDiv, postContainer.childNodes[0]);
 
 
           //}
       })
     //})
+}
+
+function createUpdateForm(id, title, postText) {
+  var updateDiv = document.createElement('div');
+  updateDiv.className = "update-container";
+  var updateForm = document.createElement("form");
+  updateForm.setAttribute("class", "updateForm");
+  updateDiv.appendChild(updateForm);
+
+  var updateTitle = document.createElement("textarea");
+  updateTitle.setAttribute("name", "title");
+  updateTitle.setAttribute("rows", "1");
+  updateTitle.innerHTML = title;
+  updateForm.appendChild(updateTitle);
+
+  var updateBlogpost = document.createElement("textarea");
+  updateBlogpost.setAttribute("name", "blogpost");
+  updateBlogpost.setAttribute("rows", "5");
+
+  updateBlogpost.innerHTML = postText;
+  updateForm.appendChild(updateBlogpost);
+  document.getElementById(id).appendChild(updateDiv);
 }
