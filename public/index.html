@@ -11,24 +11,26 @@
         <header>
             <img class="main-logo" src="./img/logo1.png">
             <h1 class="title">Node Girls</h1>
+
         </header>
         <main>
-            <div class="entry-container">
-              <h3>WRITE SOMETHING!</h3>
-              <form action="/create-post" method="POST">
-                <textarea name="title" rows="1" cols="14"></textarea>
-                <textarea name="blogpost" rows="10" cols="14"></textarea>
-                <button type="submit">Send</button>
-              </form>
+            <div class="page-container">
+              <div class="entry-container">
+                <h3>WRITE SOMETHING!</h3>
+                <form action="/create-post" method="POST">
+                  <textarea name="title" rows="1" cols="14"></textarea>
+                  <textarea name="blogpost" rows="10" cols="14"></textarea>
+                  <button type="submit">Send</button>
+                </form>
+              </div>
+
+              <br/>
+
+              <div class="post-container"></div>
+              <footer class="footer">
+                <p>hej</p>
+              </footer>
             </div>
-
-            <br/>
-            <hr/>
-            <br/>
-
-            <h2>Recent Posts</h2>
-
-            <div class="post-container"></div>
         </main>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="./script.js" type="text/javascript"></script>
