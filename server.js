@@ -20,7 +20,7 @@ var con = mysql.createConnection({
 
 con.connect(function(err) {
   if (err) {console.log("error")}
-  else {console.log("you are Connected!")}
+  else {console.log("You are Connected!")}
 
 });
 
@@ -53,7 +53,19 @@ app.post('/create-post', function (req, res) {
 
 app.get('/get-posts', function (req, res) {
   //res.sendFile(__dirname + '/data/posts.json');
-  con.query('SELECT * FROM blogposts', function(err, data) {
+  con.query('SELECT * FROM blogposts ORDER BY date ASC', function(err, data) {
+    if(err) {console.log("Could not get")}
+    else {
+      res.send(data);
+    }
+  });
+});
+
+app.get('/get-post', function (req, res) {
+  var blogPostId = req.fields.id;
+
+  //res.sendFile(__dirname + '/data/posts.json');
+  con.query('SELECT * FROM blogposts WHERE id=' + blogPostId, function(err, data) {
     if(err) {console.log("Could not get")}
     else {
       res.send(data);
@@ -68,7 +80,7 @@ app.delete('/delete-post', function (req, res) {
   con.query('DELETE FROM blogposts WHERE id =' + blogPostId, function(err, data) {
     if(err) {console.log("no Could not delete")}
     else {
-      res.send(deletedPost);
+      res.send(deletedPost); //Se över detta??
     }
   })
 })
