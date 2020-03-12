@@ -61,17 +61,21 @@ app.get('/get-posts', function (req, res) {
   });
 });
 
-app.get('/get-post', function (req, res) {
+app.post("/update-post", function (req, res) {
   var blogPostId = req.fields.id;
+  var blogPost = req.fields.blogpost;
+  var blogTitle = req.fields.title;
 
-  //res.sendFile(__dirname + '/data/posts.json');
-  con.query('SELECT * FROM blogposts WHERE id=' + blogPostId, function(err, data) {
-    if(err) {console.log("Could not get")}
+  console.log(req.fields);
+  //var deletedPost = req.fields;
+  con.query('UPDATE blogposts SET blogpost ="' + blogPost + '", title ="' +  blogTitle + '" WHERE id =' + blogPostId, function(err, data) {
+    if(err) {console.log("no Could not update")}
     else {
-      res.send(data);
+      console.log("det funka");
+      //res.send(data);
     }
-  });
-});
+  })
+})
 
 app.delete('/delete-post', function (req, res) {
   var blogPostId = req.fields.id;
