@@ -7,11 +7,9 @@ if (document.readyState !== 'loading') {
 function ready () {
     getBlogposts('/get-posts');
 
-    // send posts to server
-    var form = document.querySelector('form');
+    var form = document.querySelector('.entry-form');
     form.addEventListener('submit', function (event) {
-
-        event.preventDefault(); // prevents the form from contacting our server automatically (we want to do it ourselves)
+        event.preventDefault();
         var formActionUrl = form.action; // 'form.action' is the url '/create-post'
         var formData = new FormData(form);
         postBlogposts(formActionUrl, formData);
@@ -31,6 +29,24 @@ function postBlogposts (url, data) {
         res.json()
             .then(function (json) {
                 addBlogpostsToPage(json);
+                document.querySelector('form').reset();
+        })
+    })
+    .catch(function (err) {
+        console.error(err)
+    });
+}
+
+function sendUpdatedBlogpost (url, data) {
+    fetch(url, {
+        method: 'POST',
+        body: data
+    })
+    .then(function (res) {
+        res.json()
+            .then(function (json) {
+              console.log(json);
+                //addBlogpostsToPage(json);
                 document.querySelector('form').reset();
         })
     })
@@ -129,6 +145,8 @@ function createUpdateForm(id, title, postText) {
   updateDiv.className = "update-container";
   var updateForm = document.createElement("form");
   updateForm.setAttribute("class", "updateForm");
+  updateForm.setAttribute("action", "/update-post");
+  updateForm.setAttribute("method", "POST");
   updateDiv.appendChild(updateForm);
 
   var updateTitle = document.createElement("textarea");
@@ -140,8 +158,23 @@ function createUpdateForm(id, title, postText) {
   var updateBlogpost = document.createElement("textarea");
   updateBlogpost.setAttribute("name", "blogpost");
   updateBlogpost.setAttribute("rows", "5");
-
   updateBlogpost.innerHTML = postText;
   updateForm.appendChild(updateBlogpost);
+
+  var sendUpdateButton = document.createElement('button');
+  sendUpdateButton.textContent = "send";
+
+  sendUpdateButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    var formActionUrl = updateForm.action;
+    var formData = new FormData(updateForm);
+    formData.append('id', id);
+    sendUpdatedBlogpost(formActionUrl, formData);
+
+  });
+
+  updateForm.appendChild(sendUpdateButton);
+
+
   document.getElementById(id).appendChild(updateDiv);
 }
