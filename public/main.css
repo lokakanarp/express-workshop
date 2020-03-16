@@ -44,12 +44,6 @@ h2 {
 	font-weight: 700;
 }
 
-main {
-	/* display: block;
-	width: 80%;
-	margin: 0 auto; */
-}
-
 .page-container {
 	display: flex;
 	flex-direction: column;
@@ -61,6 +55,7 @@ main {
 	background-color: black;
 	height: 50px;
 	width: 100%;
+	margin-top: 25px;
 }
 .footer p {
 	color: gray;
@@ -124,11 +119,11 @@ button {
 	background: black;
 	border: none;
   color: white;
-  padding: 4px 25px;
+  padding: 4px 20px;
   text-transform: uppercase;
   letter-spacing: 1px;
   float: right;
-  margin: 10px 0;
+  margin: 8px 0;
   border-radius: 3px;
 }
 .button-container button {
@@ -164,7 +159,7 @@ hr {
   margin: 5px 0;
   border-radius: 3px;
   background: white;
-	padding: 35px;
+	padding: 10px 30px;
 }
 
 .post p {
@@ -174,8 +169,13 @@ hr {
 	letter-spacing: 0.05em;
 }
 
-@media (min-width: 600px) {
+@media (max-width: 600px) {
 	 .post {
-		//width: 28.9%;
+		width: 85%;
 	}
+
+	.entry-container {
+		width: 85%;
+	}
+
 }

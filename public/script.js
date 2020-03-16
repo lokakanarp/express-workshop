@@ -25,9 +25,9 @@ function postBlogposts (url, data) {
         body: data
     })
     .then(function (res) {
-      console.log(res)
         res.json()
             .then(function (json) {
+              console.log(json)
                 addBlogpostsToPage(json);
                 document.querySelector('form').reset();
         })
@@ -45,9 +45,7 @@ function sendUpdatedBlogpost (url, data) {
     .then(function (res) {
         res.json()
             .then(function (json) {
-              console.log(json);
-                //addBlogpostsToPage(json);
-                document.querySelector('form').reset();
+              location.reload();
         })
     })
     .catch(function (err) {
@@ -70,7 +68,9 @@ function getBlogposts (url) {
     });
 }
 
-function deleteBlogpost(url, data) {
+function deleteBlogpost(url, data, id) {
+  var postToDelete = document.getElementById(id);
+  postToDelete.style.opacity = '0.5';
   fetch(url, {
       method: 'DELETE',
       body: data
@@ -78,7 +78,7 @@ function deleteBlogpost(url, data) {
   .then(function (res) {
       res.json()
           .then(function (json) {
-            console.log(json);
+            postToDelete.remove();
      })
   })
   .catch(function (err) {
@@ -91,7 +91,6 @@ function addBlogpostsToPage (data) {
     data.forEach(function(arrayItem) {
       //for (var blogpost in arrayItem) {
           //if (arrayItem.hasOwnProperty(blogpost)) {
-
               var postDiv         = document.createElement('div');
               var titleAndText    = document.createElement('div');
               var postTitle       = document.createElement('h2');
@@ -115,14 +114,14 @@ function addBlogpostsToPage (data) {
 
               deleteButton.addEventListener('click', function (event) {
                   event.preventDefault();
-                  postDiv.remove();
-                  deleteBlogpost('/delete-post', formData);
+                  //postDiv.remove();
+                  deleteBlogpost('/delete-post', formData, arrayItem.id);
               });
 
               updateButton.addEventListener('click', function (event) {
                   event.preventDefault();
                   updateButton.remove();
-                  createUpdateForm(postDiv.id, arrayItem.title, arrayItem.blogpost);
+                  createUpdateForm(postDiv.id, arrayItem.title, arrayItem.blogpost, arrayItem.date);
               });
 
               titleAndText.appendChild(postTitle);
@@ -140,7 +139,7 @@ function addBlogpostsToPage (data) {
     //})
 }
 
-function createUpdateForm(id, title, postText) {
+function createUpdateForm(id, title, postText, date) {
   var updateDiv = document.createElement('div');
   updateDiv.className = "update-container";
   var updateForm = document.createElement("form");
