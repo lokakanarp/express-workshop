@@ -32,6 +32,7 @@ app.post('/create-post', function (req, res) {
   con.query('INSERT INTO blogposts (blogpost, title) VALUES ("'+ newBlogpost +'", "'+ newTitle +'")', function(err, data) {
     if(err) {console.log("Could not post")}
     else {
+      console.log(data);
       var newId = data.insertId;
       var responseData = [{"blogpost" : newBlogpost, "title": newTitle, "id": newId}];
       res.send(responseData);
@@ -66,13 +67,10 @@ app.post("/update-post", function (req, res) {
   var blogPost = req.fields.blogpost;
   var blogTitle = req.fields.title;
 
-  console.log(req.fields);
-  //var deletedPost = req.fields;
-  con.query('UPDATE blogposts SET blogpost ="' + blogPost + '", title ="' +  blogTitle + '" WHERE id =' + blogPostId, function(err, data) {
+  con.query('UPDATE blogposts SET blogpost ="' + blogPost + '", title ="' +  blogTitle + '", date = date WHERE id =' + blogPostId, function(err, data) {
     if(err) {console.log("no Could not update")}
     else {
-      console.log("det funka");
-      //res.send(data);
+      res.send(data);
     }
   })
 })
