@@ -16,9 +16,6 @@ function ready () {
     });
 }
 
-/****
- * Function definitions
- ***/
 function postBlogposts (url, data) {
     fetch(url, {
         method: 'POST',
@@ -68,6 +65,22 @@ function getBlogposts (url) {
     });
 }
 
+function getSingleBlogpost (url) {
+    fetch(url, {
+        method: 'GET'
+    })
+    .then(function (res) {
+        res.json()
+        .then(function (json) {
+          addSingleBlogpostToPage(json);
+            //addBlogpostsToPage(json);
+        });
+    })
+    .catch(function (err) {
+        console.error(err)
+    });
+}
+
 function deleteBlogpost(url, data, id) {
   var postToDelete = document.getElementById(id);
   postToDelete.style.opacity = '0.5';
@@ -88,55 +101,102 @@ function deleteBlogpost(url, data, id) {
 
 function addBlogpostsToPage (data) {
 
-    data.forEach(function(arrayItem) {
-      //for (var blogpost in arrayItem) {
-          //if (arrayItem.hasOwnProperty(blogpost)) {
-              var postDiv         = document.createElement('div');
-              var titleAndText    = document.createElement('div');
-              var postTitle       = document.createElement('h2');
-              var postText        = document.createElement('p');
-              var postContainer   = document.querySelector('.post-container');
-              var buttonContainer = document.createElement('div');
-              var deleteButton    = document.createElement('button');
-              var updateButton    = document.createElement('button');
+  data.forEach(function(arrayItem) {
+    var postDiv         = document.createElement('div');
+    var titleAndText    = document.createElement('div');
+    var postTitle       = document.createElement('h2');
+    var postText        = document.createElement('p');
+    var postContainer   = document.querySelector('.post-container');
+    var buttonContainer = document.createElement('div');
+    var deleteButton    = document.createElement('button');
+    var updateButton    = document.createElement('button');
 
-              postText.innerHTML = arrayItem.blogpost;
-              postTitle.innerHTML = arrayItem.title;
-              buttonContainer.className = "button-container";
-              updateButton.textContent = "edit";
-              deleteButton.textContent = "delete";
-              postDiv.className = "post";
-              postDiv.id = arrayItem.id;
+    postText.innerHTML = arrayItem.blogpost;
+    postTitle.innerHTML = arrayItem.title;
+    buttonContainer.className = "button-container";
+    updateButton.textContent = "edit";
+    deleteButton.textContent = "delete";
+    postDiv.className = "post";
+    postDiv.id = arrayItem.id;
 
-              var formData = new FormData();
-              formData.append('id', arrayItem.id);
+    var formData = new FormData();
+    formData.append('id', arrayItem.id);
 
+    // postTitle.addEventListener('click', function (event) {
+    //   event.preventDefault();
+    //   getSingleBlogpost('/posts/' + arrayItem.id);
+    // })
 
-              deleteButton.addEventListener('click', function (event) {
-                  event.preventDefault();
-                  //postDiv.remove();
-                  deleteBlogpost('/delete-post', formData, arrayItem.id);
-              });
+    deleteButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        deleteBlogpost('/delete-post', formData, arrayItem.id);
+    });
 
-              updateButton.addEventListener('click', function (event) {
-                  event.preventDefault();
-                  updateButton.remove();
-                  createUpdateForm(postDiv.id, arrayItem.title, arrayItem.blogpost, arrayItem.date);
-              });
+    updateButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        updateButton.remove();
+        createUpdateForm(postDiv.id, arrayItem.title, arrayItem.blogpost, arrayItem.date);
+    });
 
-              titleAndText.appendChild(postTitle);
-              titleAndText.appendChild(postText);
-              postDiv.appendChild(titleAndText);
-              postDiv.appendChild(buttonContainer);
-              buttonContainer.appendChild(deleteButton);
-              buttonContainer.appendChild(updateButton);
-              //postContainer.appendChild(postDiv);
-              postContainer.insertBefore(postDiv, postContainer.childNodes[0]);
+    titleAndText.appendChild(postTitle);
+    titleAndText.appendChild(postText);
+    postDiv.appendChild(titleAndText);
+    postDiv.appendChild(buttonContainer);
+    buttonContainer.appendChild(deleteButton);
+    buttonContainer.appendChild(updateButton);
+    //postContainer.appendChild(postDiv);
+    postContainer.insertBefore(postDiv, postContainer.childNodes[0]);
+  })
+}
 
+function addSingleBlogpostToPage (data) {
+  data.forEach(function(arrayItem) {
+    var postDiv         = document.createElement('div');
+    var titleAndText    = document.createElement('div');
+    var postTitle       = document.createElement('h2');
+    var postText        = document.createElement('p');
+    var postContainer   = document.querySelector('.post-container');
+    var buttonContainer = document.createElement('div');
+    var deleteButton    = document.createElement('button');
+    var updateButton    = document.createElement('button');
 
-          //}
-      })
-    //})
+    postText.innerHTML = arrayItem.blogpost;
+    postTitle.innerHTML = arrayItem.title;
+    buttonContainer.className = "button-container";
+    updateButton.textContent = "edit";
+    deleteButton.textContent = "delete";
+    postDiv.className = "post";
+    postDiv.id = arrayItem.id;
+
+    var formData = new FormData();
+    formData.append('id', arrayItem.id);
+
+    postTitle.addEventListener('click', function (event) {
+      event.preventDefault();
+      getSingleBlogpost('/posts/' + arrayItem.id);
+    })
+
+    deleteButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        deleteBlogpost('/delete-post', formData, arrayItem.id);
+    });
+
+    updateButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        updateButton.remove();
+        createUpdateForm(postDiv.id, arrayItem.title, arrayItem.blogpost, arrayItem.date);
+    });
+
+    titleAndText.appendChild(postTitle);
+    titleAndText.appendChild(postText);
+    postDiv.appendChild(titleAndText);
+    postDiv.appendChild(buttonContainer);
+    buttonContainer.appendChild(deleteButton);
+    buttonContainer.appendChild(updateButton);
+    //postContainer.appendChild(postDiv);
+    postContainer.innerHTML = '';
+    postContainer.appendChild(postDiv);
+  })
 }
 
 function createUpdateForm(id, title, postText, date) {
