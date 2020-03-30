@@ -62,6 +62,16 @@ app.get('/get-posts', function (req, res) {
   });
 });
 
+app.get('/posts/:postId', function (req, res) {
+  var blogPostId = req.params.postId;
+  con.query('SELECT * FROM blogposts WHERE id =' + blogPostId, function(err, data) {
+    if(err) {console.log("no Could not get single blogpost")}
+    else {
+      res.send(data);
+    }
+  })
+});
+
 app.post("/update-post", function (req, res) {
   var blogPostId = req.fields.id;
   var blogPost = req.fields.blogpost;
