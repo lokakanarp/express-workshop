@@ -53,9 +53,8 @@ h2 {
 
 .footer {
 	background-color: black;
-	height: 50px;
-	width: 100%;
 	margin-top: 25px;
+	padding: 20px;
 }
 .footer p {
 	color: gray;
@@ -162,7 +161,7 @@ hr {
 	padding: 10px 30px;
 }
 
-.post p {
+p {
 	font-size: 15px;
 	font-weight: 300;
 	line-height: 1.36em;
